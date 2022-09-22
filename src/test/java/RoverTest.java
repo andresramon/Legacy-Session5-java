@@ -8,7 +8,7 @@ public class RoverTest{
         Rover rover = new Rover();
         rover.setOrientation(Orientation.N);
 
-        rover.rotate("I");
+        rover.rotate(Rotation.I);
 
         Assertions.assertEquals(Orientation.O, rover.getOrientation());
     }
@@ -18,7 +18,7 @@ public class RoverTest{
         Rover rover = new Rover();
         rover.setOrientation(Orientation.O);
 
-        rover.rotate("I");
+        rover.rotate(Rotation.I);
 
         Assertions.assertEquals(Orientation.S, rover.getOrientation());
     }
@@ -28,7 +28,7 @@ public class RoverTest{
         Rover rover = new Rover();
         rover.setOrientation(Orientation.S);
 
-        rover.rotate("I");
+        rover.rotate(Rotation.I);
 
         Assertions.assertEquals(Orientation.E, rover.getOrientation());
     }
@@ -38,7 +38,7 @@ public class RoverTest{
         Rover rover = new Rover();
         rover.setOrientation(Orientation.E);
 
-        rover.rotate("I");
+        rover.rotate(Rotation.I);
 
         Assertions.assertEquals(Orientation.N, rover.getOrientation());
     }
@@ -48,7 +48,7 @@ public class RoverTest{
         Rover rover = new Rover();
         rover.setOrientation(Orientation.N);
 
-        rover.rotate("D");
+        rover.rotate(Rotation.D);
 
         Assertions.assertEquals(Orientation.E, rover.getOrientation());
     }
@@ -58,7 +58,7 @@ public class RoverTest{
         Rover rover = new Rover();
         rover.setOrientation(Orientation.E);
 
-        rover.rotate("D");
+        rover.rotate(Rotation.D);
 
         Assertions.assertEquals(Orientation.S, rover.getOrientation());
     }
@@ -68,7 +68,7 @@ public class RoverTest{
         Rover rover = new Rover();
         rover.setOrientation(Orientation.S);
 
-        rover.rotate("D");
+        rover.rotate(Rotation.D);
 
         Assertions.assertEquals(Orientation.O, rover.getOrientation());
     }
@@ -78,7 +78,7 @@ public class RoverTest{
         Rover rover = new Rover();
         rover.setOrientation(Orientation.O);
 
-        rover.rotate("D");
+        rover.rotate(Rotation.D);
 
         Assertions.assertEquals(Orientation.N, rover.getOrientation());
     }

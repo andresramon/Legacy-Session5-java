@@ -1,28 +1,30 @@
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 public class Rover{
 
+    private static final Map<Orientation, Orientation> directionLeftMap = new EnumMap<>(Orientation.class);
+    private static final Map<Orientation, Orientation> directionRightMap = new EnumMap<>(Orientation.class);
+
+    static{
+        directionRightMap.put(Orientation.N, Orientation.E);
+        directionRightMap.put(Orientation.E, Orientation.S);
+        directionRightMap.put(Orientation.S, Orientation.O);
+        directionRightMap.put(Orientation.O, Orientation.N);
+
+        directionLeftMap.put(Orientation.N, Orientation.O);
+        directionLeftMap.put(Orientation.O, Orientation.S);
+        directionLeftMap.put(Orientation.S, Orientation.E);
+        directionLeftMap.put(Orientation.E, Orientation.N);
+    }
+
     private Orientation orientation;
-    private Map<Orientation, Orientation> directionLeftMap = new HashMap<Orientation, Orientation>(){{
-       put(Orientation.N, Orientation.O);
-       put(Orientation.O, Orientation.S);
-       put(Orientation.S, Orientation.E);
-       put(Orientation.E, Orientation.N);
-    }};
 
-    private Map<Orientation, Orientation> directionRightMap = new HashMap<Orientation, Orientation>(){{
-        put(Orientation.N, Orientation.E);
-        put(Orientation.E, Orientation.S);
-        put(Orientation.S, Orientation.O);
-        put(Orientation.O, Orientation.N);
-    }};
+    public void rotate(Rotation direction){
 
-    public void rotate(String direction){
-
-        if(direction.equals("I")){
+        if(direction == Rotation.I){
             orientation = directionLeftMap.get(orientation);
-        }else if(direction.equals("D")){
+        }else if(direction == Rotation.D){
             orientation = directionRightMap.get(orientation);
         }
     }
