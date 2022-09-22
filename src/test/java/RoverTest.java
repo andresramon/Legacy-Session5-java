@@ -83,5 +83,14 @@ public class RoverTest{
         Assertions.assertEquals(Orientation.N, rover.getOrientation());
     }
 
+    @Test
+    public void whenOrientationIsNorthAndCommandIsAThenCoordinateYShouldBeIncreasedInOne(){
+        Rover rover = new Rover();
+        rover.setOrientation(Orientation.N);
+
+        //rover.move("A");
+
+        //Assertions.assertEquals(rover.getPosition(), rover.getOrientation());
+    }
 
 }
