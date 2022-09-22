@@ -6,81 +6,81 @@ public class RoverTest{
     @Test
     public void whenOrientationIsNorthAndCommandIsIThenOrientationShouldBeWest(){
         Rover rover = new Rover();
-        rover.setOrientation("N");
+        rover.setOrientation(Orientation.N);
 
         rover.rotate("I");
 
-        Assertions.assertEquals("O", rover.getOrientation());
+        Assertions.assertEquals(Orientation.O, rover.getOrientation());
     }
 
     @Test
     public void whenOrientationIsWestAndCommandIsIThenOrientationShouldBeSouth(){
         Rover rover = new Rover();
-        rover.setOrientation("O");
+        rover.setOrientation(Orientation.O);
 
         rover.rotate("I");
 
-        Assertions.assertEquals("S", rover.getOrientation());
+        Assertions.assertEquals(Orientation.S, rover.getOrientation());
     }
 
     @Test
     public void whenOrientationIsSouthAndCommandIsIThenOrientationShouldBeEast(){
         Rover rover = new Rover();
-        rover.setOrientation("S");
+        rover.setOrientation(Orientation.S);
 
         rover.rotate("I");
 
-        Assertions.assertEquals("E", rover.getOrientation());
+        Assertions.assertEquals(Orientation.E, rover.getOrientation());
     }
 
     @Test
     public void whenOrientationIsEastAndCommandIsIThenOrientationShouldBeNorth(){
         Rover rover = new Rover();
-        rover.setOrientation("E");
+        rover.setOrientation(Orientation.E);
 
         rover.rotate("I");
 
-        Assertions.assertEquals("N", rover.getOrientation());
+        Assertions.assertEquals(Orientation.N, rover.getOrientation());
     }
 
     @Test
     public void whenOrientationIsNorthAndCommandIsDThenOrientationShouldBeEast(){
         Rover rover = new Rover();
-        rover.setOrientation("N");
+        rover.setOrientation(Orientation.N);
 
         rover.rotate("D");
 
-        Assertions.assertEquals("E", rover.getOrientation());
+        Assertions.assertEquals(Orientation.E, rover.getOrientation());
     }
 
     @Test
     public void whenOrientationIsEastAndCommandIsDThenOrientationShouldBeSouth(){
         Rover rover = new Rover();
-        rover.setOrientation("E");
+        rover.setOrientation(Orientation.E);
 
         rover.rotate("D");
 
-        Assertions.assertEquals("S", rover.getOrientation());
+        Assertions.assertEquals(Orientation.S, rover.getOrientation());
     }
 
     @Test
     public void whenOrientationIsSouthAndCommandIsDThenOrientationShouldBeWest(){
         Rover rover = new Rover();
-        rover.setOrientation("S");
+        rover.setOrientation(Orientation.S);
 
         rover.rotate("D");
 
-        Assertions.assertEquals("O", rover.getOrientation());
+        Assertions.assertEquals(Orientation.O, rover.getOrientation());
     }
 
     @Test
     public void whenOrientationIsWestAndCommandIsDThenOrientationShouldBeNorth(){
         Rover rover = new Rover();
-        rover.setOrientation("O");
+        rover.setOrientation(Orientation.O);
 
         rover.rotate("D");
 
-        Assertions.assertEquals("N", rover.getOrientation());
+        Assertions.assertEquals(Orientation.N, rover.getOrientation());
     }
 
 
