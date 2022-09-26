@@ -84,7 +84,8 @@ public class RoverTest{
     }
 
     @Test
-    public void whenOrientationIsNorthAndCommandIsAThenCoordinateYShouldBeIncreasedInOne(){
+    public void whenOrientationIsNorthAndCommandIsAThenCoordinateYShouldBeIncreasedInOne()
+            throws InvalidInstructionException {
         Position initialposition = new Position(0, 0);
         Position finalPosition = new Position(0, 1);
         Orientation orientation = Orientation.N;
@@ -92,10 +93,9 @@ public class RoverTest{
         checkRoverMovementForGivenOrientationAndDirection(initialposition, finalPosition, orientation, movementDirection);
     }
 
-
-
     @Test
-    public void whenOrientationIsNorthAndCommandIsRThenCoordinateYShouldBeDecreasedInOne(){
+    public void whenOrientationIsNorthAndCommandIsRThenCoordinateYShouldBeDecreasedInOne()
+            throws InvalidInstructionException {
         Position initialPosition = new Position(0, 1);
         Position finalPosition = new Position(0, 0);
         Orientation orientation = Orientation.N;
@@ -104,7 +104,8 @@ public class RoverTest{
     }
 
     @Test
-    public void whenOrientationIsEastAndCommandIsAThenCoordinateXShouldBeIncreasedInOne(){
+    public void whenOrientationIsEastAndCommandIsAThenCoordinateXShouldBeIncreasedInOne()
+            throws InvalidInstructionException {
         Position initialPosition = new Position(0, 0);
         Position finalPosition = new Position(1, 0);
         Orientation orientation = Orientation.E;
@@ -113,7 +114,8 @@ public class RoverTest{
     }
 
     @Test
-    public void whenOrientationIsSouthAndCommandIsAThenCoordinateYShouldBeDecreasedInOne(){
+    public void whenOrientationIsSouthAndCommandIsAThenCoordinateYShouldBeDecreasedInOne()
+            throws InvalidInstructionException {
         Position initialPosition = new Position(0, 1);
         Position finalPosition = new Position(0, 0);
         Orientation orientation = Orientation.S;
@@ -122,7 +124,8 @@ public class RoverTest{
     }
 
     @Test
-    public void whenOrientationIsWestAndCommandIsAThenCoordinateXShouldBeDecreasedInOne(){
+    public void whenOrientationIsWestAndCommandIsAThenCoordinateXShouldBeDecreasedInOne()
+            throws InvalidInstructionException {
         Position initialPosition = new Position(1, 0);
         Position finalPosition = new Position(0, 0);
         Orientation orientation = Orientation.O;
@@ -131,7 +134,8 @@ public class RoverTest{
     }
 
     @Test
-    public void whenOrientationIsEastAndCommandIsRThenCoordinateXShouldBeDecreasedInOne(){
+    public void whenOrientationIsEastAndCommandIsRThenCoordinateXShouldBeDecreasedInOne()
+            throws InvalidInstructionException {
         Position initialPosition = new Position(1, 0);
         Position finalPosition = new Position(0, 0);
         Orientation orientation = Orientation.E;
@@ -140,7 +144,8 @@ public class RoverTest{
     }
 
     @Test
-    public void whenOrientationIsSouthAndCommandIsRThenCoordinateYShouldBeIncreasedInOne(){
+    public void whenOrientationIsSouthAndCommandIsRThenCoordinateYShouldBeIncreasedInOne()
+            throws InvalidInstructionException {
         Position initialPosition = new Position(0, 0);
         Position finalPosition = new Position(0, 1);
         Orientation orientation = Orientation.S;
@@ -149,7 +154,8 @@ public class RoverTest{
     }
 
     @Test
-    public void whenOrientationIsWestAndCommandIsRThenCoordinateXShouldBeIncreasedInOne(){
+    public void whenOrientationIsWestAndCommandIsRThenCoordinateXShouldBeIncreasedInOne()
+            throws InvalidInstructionException {
         Position initialPosition = new Position(0, 0);
         Position finalPosition = new Position(1, 0);
         Orientation orientation = Orientation.O;
@@ -158,7 +164,7 @@ public class RoverTest{
     }
 
     private void checkRoverMovementForGivenOrientationAndDirection(Position initialPosition, Position finalPosition, Orientation orientation,
-            MovementDirection movementDirection) {
+            MovementDirection movementDirection) throws InvalidInstructionException {
         Rover rover = new Rover();
         rover.setOrientation(orientation);
         rover.setPosition(initialPosition);
@@ -167,6 +173,30 @@ public class RoverTest{
 
         Assertions.assertEquals(finalPosition, rover.getPosition());
         Assertions.assertEquals(orientation, rover.getOrientation());
+    }
+
+    @Test
+    public void roverShouldNotMoveOutOfBoundsOnTheSouth() {
+
+        Rover rover = new Rover();
+        rover.setPosition(new Position(0,0));
+        rover.setOrientation(Orientation.S);
+
+        Assertions.assertThrows(InvalidInstructionException.class, () -> {
+            rover.move(MovementDirection.A);
+        });
+    }
+
+    @Test
+    public void roverShouldNotMoveOutOfBoundsOnTheWest() {
+
+        Rover rover = new Rover();
+        rover.setPosition(new Position(0,0));
+        rover.setOrientation(Orientation.O);
+
+        Assertions.assertThrows(InvalidInstructionException.class, () -> {
+            rover.move(MovementDirection.A);
+        });
     }
 
 

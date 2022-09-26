@@ -14,7 +14,10 @@ public class Position {
         this.y += 1;
     }
 
-    public void moveSouth() {
+    public void moveSouth() throws InvalidInstructionException {
+        if (this.y == 0) {
+            throw new InvalidInstructionException();
+        }
         this.y -= 1;
     }
 
@@ -22,7 +25,10 @@ public class Position {
         this.x += 1;
     }
 
-    public void moveWest() {
+    public void moveWest() throws InvalidInstructionException {
+        if (x == 0) {
+            throw new InvalidInstructionException();
+        }
         this.x -= 1;
     }
 

@@ -30,7 +30,7 @@ public class Rover{
         }
     }
 
-    public void move(MovementDirection direction) {
+    public void move(MovementDirection direction) throws InvalidInstructionException {
 
         if (direction == MovementDirection.R) {
             moveBackward();
@@ -40,7 +40,7 @@ public class Rover{
 
     }
 
-    private void moveBackward() {
+    private void moveBackward() throws InvalidInstructionException {
         if (this.orientation == Orientation.E) {
             this.position.moveWest();
         } else if (this.orientation == Orientation.S) {
@@ -52,7 +52,7 @@ public class Rover{
         }
     }
 
-    private void moveForward() {
+    private void moveForward() throws InvalidInstructionException {
         if (this.orientation == Orientation.E) {
             this.position.moveEast();
         } else if(this.orientation == Orientation.O) {
