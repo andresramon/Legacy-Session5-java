@@ -33,11 +33,35 @@ public class Rover{
     public void move(MovementDirection direction) {
 
         if (direction == MovementDirection.R) {
-            this.position.decreaseYBy(1);
+            moveBackward();
         } else {
-            this.position.increaseYBy(1);
+            moveForward();
         }
 
+    }
+
+    private void moveBackward() {
+        if (this.orientation == Orientation.E) {
+            this.position.moveWest(1);
+        } else if (this.orientation == Orientation.S) {
+            this.position.moveNorth(1);
+        } else if (this.orientation == Orientation.O) {
+            this.position.moveEast(1);
+        } else {
+            this.position.moveSouth(1);
+        }
+    }
+
+    private void moveForward() {
+        if (this.orientation == Orientation.E) {
+            this.position.moveEast(1);
+        } else if(this.orientation == Orientation.O) {
+            this.position.moveWest(1);
+        } else if(this.orientation == Orientation.S) {
+            this.position.moveSouth(1);
+        }  else {
+            this.position.moveNorth(1);
+        }
     }
 
     public Orientation getOrientation(){

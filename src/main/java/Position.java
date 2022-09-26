@@ -10,12 +10,20 @@ public class Position {
         this.y = y;
     }
 
-    public void increaseYBy(int steps) {
+    public void moveNorth(int steps) {
         this.y += steps;
     }
 
-    public void decreaseYBy(int steps) {
+    public void moveSouth(int steps) {
         this.y -= steps;
+    }
+
+    public void moveEast(int steps) {
+        this.x += steps;
+    }
+
+    public void moveWest(int steps) {
+        this.x -= steps;
     }
 
     @Override
@@ -32,4 +40,5 @@ public class Position {
     public int hashCode() {
         return Objects.hash(x, y);
     }
+
 }

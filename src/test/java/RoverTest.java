@@ -1,4 +1,3 @@
-import com.sun.glass.ui.Screen;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -86,32 +85,90 @@ public class RoverTest{
 
     @Test
     public void whenOrientationIsNorthAndCommandIsAThenCoordinateYShouldBeIncreasedInOne(){
-        Position position = new Position(0,0);
-        Rover rover = new Rover();
-        rover.setOrientation(Orientation.N);
-        rover.setPosition(position);
-
-        rover.move(MovementDirection.A);
-
-        Position finalPosition = new Position(0,1);
-
-        Assertions.assertEquals(finalPosition, rover.getPosition());
-        Assertions.assertEquals(Orientation.N, rover.getOrientation());
+        Position initialposition = new Position(0, 0);
+        Position finalPosition = new Position(0, 1);
+        Orientation orientation = Orientation.N;
+        MovementDirection movementDirection = MovementDirection.A;
+        checkRoverMovementForGivenOrientationAndDirection(initialposition, finalPosition, orientation, movementDirection);
     }
+
+
 
     @Test
     public void whenOrientationIsNorthAndCommandIsRThenCoordinateYShouldBeDecreasedInOne(){
-        Position position = new Position(0,1);
+        Position initialPosition = new Position(0, 1);
+        Position finalPosition = new Position(0, 0);
+        Orientation orientation = Orientation.N;
+        MovementDirection movementDirection = MovementDirection.R;
+        checkRoverMovementForGivenOrientationAndDirection(initialPosition, finalPosition, orientation, movementDirection);
+    }
+
+    @Test
+    public void whenOrientationIsEastAndCommandIsAThenCoordinateXShouldBeIncreasedInOne(){
+        Position initialPosition = new Position(0, 0);
+        Position finalPosition = new Position(1, 0);
+        Orientation orientation = Orientation.E;
+        MovementDirection movementDirection = MovementDirection.A;
+        checkRoverMovementForGivenOrientationAndDirection(initialPosition, finalPosition, orientation, movementDirection);
+    }
+
+    @Test
+    public void whenOrientationIsSouthAndCommandIsAThenCoordinateYShouldBeDecreasedInOne(){
+        Position initialPosition = new Position(0, 1);
+        Position finalPosition = new Position(0, 0);
+        Orientation orientation = Orientation.S;
+        MovementDirection movementDirection = MovementDirection.A;
+        checkRoverMovementForGivenOrientationAndDirection(initialPosition, finalPosition, orientation, movementDirection);
+    }
+
+    @Test
+    public void whenOrientationIsWestAndCommandIsAThenCoordinateXShouldBeDecreasedInOne(){
+        Position initialPosition = new Position(1, 0);
+        Position finalPosition = new Position(0, 0);
+        Orientation orientation = Orientation.O;
+        MovementDirection movementDirection = MovementDirection.A;
+        checkRoverMovementForGivenOrientationAndDirection(initialPosition, finalPosition, orientation, movementDirection);
+    }
+
+    @Test
+    public void whenOrientationIsEastAndCommandIsRThenCoordinateXShouldBeDecreasedInOne(){
+        Position initialPosition = new Position(1, 0);
+        Position finalPosition = new Position(0, 0);
+        Orientation orientation = Orientation.E;
+        MovementDirection movementDirection = MovementDirection.R;
+        checkRoverMovementForGivenOrientationAndDirection(initialPosition, finalPosition, orientation, movementDirection);
+    }
+
+    @Test
+    public void whenOrientationIsSouthAndCommandIsRThenCoordinateYShouldBeIncreasedInOne(){
+        Position initialPosition = new Position(0, 0);
+        Position finalPosition = new Position(0, 1);
+        Orientation orientation = Orientation.S;
+        MovementDirection movementDirection = MovementDirection.R;
+        checkRoverMovementForGivenOrientationAndDirection(initialPosition, finalPosition, orientation, movementDirection);
+    }
+
+    @Test
+    public void whenOrientationIsWestAndCommandIsRThenCoordinateXShouldBeIncreasedInOne(){
+        Position initialPosition = new Position(0, 0);
+        Position finalPosition = new Position(1, 0);
+        Orientation orientation = Orientation.O;
+        MovementDirection movementDirection = MovementDirection.R;
+        checkRoverMovementForGivenOrientationAndDirection(initialPosition, finalPosition, orientation, movementDirection);
+    }
+
+    private void checkRoverMovementForGivenOrientationAndDirection(Position initialPosition, Position finalPosition, Orientation orientation,
+            MovementDirection movementDirection) {
         Rover rover = new Rover();
-        rover.setOrientation(Orientation.N);
-        rover.setPosition(position);
+        rover.setOrientation(orientation);
+        rover.setPosition(initialPosition);
 
-        rover.move(MovementDirection.R);
-
-        Position finalPosition = new Position(0,0);
+        rover.move(movementDirection);
 
         Assertions.assertEquals(finalPosition, rover.getPosition());
-        Assertions.assertEquals(Orientation.N, rover.getOrientation());
+        Assertions.assertEquals(orientation, rover.getOrientation());
     }
+
+
 
 }
