@@ -10,20 +10,20 @@ public class Position {
         this.y = y;
     }
 
-    public void moveNorth(int steps) {
-        this.y += steps;
+    public void moveNorth() {
+        this.y += 1;
     }
 
-    public void moveSouth(int steps) {
-        this.y -= steps;
+    public void moveSouth() {
+        this.y -= 1;
     }
 
-    public void moveEast(int steps) {
-        this.x += steps;
+    public void moveEast() {
+        this.x += 1;
     }
 
-    public void moveWest(int steps) {
-        this.x -= steps;
+    public void moveWest() {
+        this.x -= 1;
     }
 
     @Override

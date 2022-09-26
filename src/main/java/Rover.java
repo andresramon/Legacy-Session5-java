@@ -42,25 +42,25 @@ public class Rover{
 
     private void moveBackward() {
         if (this.orientation == Orientation.E) {
-            this.position.moveWest(1);
+            this.position.moveWest();
         } else if (this.orientation == Orientation.S) {
-            this.position.moveNorth(1);
+            this.position.moveNorth();
         } else if (this.orientation == Orientation.O) {
-            this.position.moveEast(1);
+            this.position.moveEast();
         } else {
-            this.position.moveSouth(1);
+            this.position.moveSouth();
         }
     }
 
     private void moveForward() {
         if (this.orientation == Orientation.E) {
-            this.position.moveEast(1);
+            this.position.moveEast();
         } else if(this.orientation == Orientation.O) {
-            this.position.moveWest(1);
+            this.position.moveWest();
         } else if(this.orientation == Orientation.S) {
-            this.position.moveSouth(1);
+            this.position.moveSouth();
         }  else {
-            this.position.moveNorth(1);
+            this.position.moveNorth();
         }
     }
 
