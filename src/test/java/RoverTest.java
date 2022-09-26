@@ -1,3 +1,4 @@
+import com.sun.glass.ui.Screen;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -85,12 +86,32 @@ public class RoverTest{
 
     @Test
     public void whenOrientationIsNorthAndCommandIsAThenCoordinateYShouldBeIncreasedInOne(){
+        Position position = new Position(0,0);
         Rover rover = new Rover();
         rover.setOrientation(Orientation.N);
+        rover.setPosition(position);
 
-        //rover.move("A");
+        rover.move(MovementDirection.A);
 
-        //Assertions.assertEquals(rover.getPosition(), rover.getOrientation());
+        Position finalPosition = new Position(0,1);
+
+        Assertions.assertEquals(finalPosition, rover.getPosition());
+        Assertions.assertEquals(Orientation.N, rover.getOrientation());
+    }
+
+    @Test
+    public void whenOrientationIsNorthAndCommandIsRThenCoordinateYShouldBeDecreasedInOne(){
+        Position position = new Position(0,1);
+        Rover rover = new Rover();
+        rover.setOrientation(Orientation.N);
+        rover.setPosition(position);
+
+        rover.move(MovementDirection.R);
+
+        Position finalPosition = new Position(0,0);
+
+        Assertions.assertEquals(finalPosition, rover.getPosition());
+        Assertions.assertEquals(Orientation.N, rover.getOrientation());
     }
 
 }

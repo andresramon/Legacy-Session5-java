@@ -19,6 +19,7 @@ public class Rover{
     }
 
     private Orientation orientation;
+    private Position position;
 
     public void rotate(Rotation direction){
 
@@ -29,6 +30,16 @@ public class Rover{
         }
     }
 
+    public void move(MovementDirection direction) {
+
+        if (direction == MovementDirection.R) {
+            this.position.decreaseYBy(1);
+        } else {
+            this.position.increaseYBy(1);
+        }
+
+    }
+
     public Orientation getOrientation(){
 
         return orientation;
@@ -37,4 +48,14 @@ public class Rover{
     public void setOrientation(Orientation orientation){
         this.orientation = orientation;
     }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+
 }
