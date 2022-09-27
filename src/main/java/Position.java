@@ -15,21 +15,24 @@ public class Position {
     }
 
     public void moveSouth() throws InvalidInstructionException {
-        if (this.y == 0) {
-            throw new InvalidInstructionException();
-        }
+
         this.y -= 1;
     }
 
-    public void moveEast() {
+    public void moveEast()  {
         this.x += 1;
     }
 
     public void moveWest() throws InvalidInstructionException {
-        if (x == 0) {
-            throw new InvalidInstructionException();
-        }
         this.x -= 1;
+    }
+
+    public int getX(){
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     @Override
@@ -46,5 +49,6 @@ public class Position {
     public int hashCode() {
         return Objects.hash(x, y);
     }
+
 
 }

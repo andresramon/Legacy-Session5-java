@@ -20,6 +20,8 @@ public class Rover{
 
     private Orientation orientation;
     private Position position;
+    private Area area;
+
 
     public void rotate(Rotation direction){
 
@@ -54,12 +56,24 @@ public class Rover{
 
     private void moveForward() throws InvalidInstructionException {
         if (this.orientation == Orientation.E) {
+            if(!this.area.isMovementAllowed(this.position, Orientation.E)) {
+                throw new InvalidInstructionException();
+            };
             this.position.moveEast();
         } else if(this.orientation == Orientation.O) {
+            if(!this.area.isMovementAllowed(this.position, Orientation.O)) {
+                throw new InvalidInstructionException();
+            }
             this.position.moveWest();
         } else if(this.orientation == Orientation.S) {
+            if(!this.area.isMovementAllowed(this.position, Orientation.S)) {
+                throw new InvalidInstructionException();
+            }
             this.position.moveSouth();
         }  else {
+            if(!this.area.isMovementAllowed(this.position, Orientation.N)) {
+                throw new InvalidInstructionException();
+            }
             this.position.moveNorth();
         }
     }
@@ -81,5 +95,7 @@ public class Rover{
         return position;
     }
 
-
+    public void setArea(Area area) {
+        this.area = area;
+    }
 }

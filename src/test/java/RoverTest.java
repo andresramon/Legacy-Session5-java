@@ -168,8 +168,10 @@ public class RoverTest{
         Rover rover = new Rover();
         rover.setOrientation(orientation);
         rover.setPosition(initialPosition);
+        rover.setArea(new Area(5,5));
 
         rover.move(movementDirection);
+
 
         Assertions.assertEquals(finalPosition, rover.getPosition());
         Assertions.assertEquals(orientation, rover.getOrientation());
@@ -181,6 +183,7 @@ public class RoverTest{
         Rover rover = new Rover();
         rover.setPosition(new Position(0,0));
         rover.setOrientation(Orientation.S);
+        rover.setArea(new Area(5,5));
 
         Assertions.assertThrows(InvalidInstructionException.class, () -> {
             rover.move(MovementDirection.A);
@@ -193,6 +196,31 @@ public class RoverTest{
         Rover rover = new Rover();
         rover.setPosition(new Position(0,0));
         rover.setOrientation(Orientation.O);
+        rover.setArea(new Area(5,5));
+
+        Assertions.assertThrows(InvalidInstructionException.class, () -> {
+            rover.move(MovementDirection.A);
+        });
+    }
+
+    @Test
+    public void roverShouldNotMoveOutOfBoundsOnTheEast(){
+        Rover rover = new Rover();
+        rover.setPosition(new Position(4,0));
+        rover.setOrientation(Orientation.E);
+        rover.setArea(new Area(5,5));
+
+        Assertions.assertThrows(InvalidInstructionException.class, () -> {
+            rover.move(MovementDirection.A);
+        });
+    }
+
+    @Test
+    public void roverShouldNotMoveOutOfBoundsOnTheNorth() {
+        Rover rover = new Rover();
+        rover.setPosition(new Position(4,4));
+        rover.setOrientation(Orientation.N);
+        rover.setArea(new Area(5,5));
 
         Assertions.assertThrows(InvalidInstructionException.class, () -> {
             rover.move(MovementDirection.A);
