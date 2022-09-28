@@ -46,35 +46,32 @@ public class Rover{
         if (this.orientation == Orientation.E) {
             this.position.moveWest();
         } else if (this.orientation == Orientation.S) {
+            checkMovementAllowedTo(Orientation.N);
             this.position.moveNorth();
         } else if (this.orientation == Orientation.O) {
             this.position.moveEast();
         } else {
+            checkMovementAllowedTo(Orientation.S);
             this.position.moveSouth();
         }
     }
 
     private void moveForward() throws InvalidInstructionException {
+        checkMovementAllowedTo(orientation);
         if (this.orientation == Orientation.E) {
-            if(!this.area.isMovementAllowed(this.position, Orientation.E)) {
-                throw new InvalidInstructionException();
-            };
             this.position.moveEast();
         } else if(this.orientation == Orientation.O) {
-            if(!this.area.isMovementAllowed(this.position, Orientation.O)) {
-                throw new InvalidInstructionException();
-            }
             this.position.moveWest();
         } else if(this.orientation == Orientation.S) {
-            if(!this.area.isMovementAllowed(this.position, Orientation.S)) {
-                throw new InvalidInstructionException();
-            }
             this.position.moveSouth();
         }  else {
-            if(!this.area.isMovementAllowed(this.position, Orientation.N)) {
-                throw new InvalidInstructionException();
-            }
             this.position.moveNorth();
+        }
+    }
+
+    private void checkMovementAllowedTo(Orientation e) throws InvalidInstructionException {
+        if (!this.area.isMovementAllowed(this.position, e)) {
+            throw new InvalidInstructionException();
         }
     }
 

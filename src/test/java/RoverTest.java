@@ -1,5 +1,10 @@
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class RoverTest{
 
@@ -177,56 +182,30 @@ public class RoverTest{
         Assertions.assertEquals(orientation, rover.getOrientation());
     }
 
-    @Test
-    public void roverShouldNotMoveOutOfBoundsOnTheSouth() {
-
+    @ParameterizedTest
+    @MethodSource("illegalMovements")
+    public void roverShouldNotMoveOutOfBounds(MovementDirection direction,Orientation orientation, Position position) {
         Rover rover = new Rover();
-        rover.setPosition(new Position(0,0));
-        rover.setOrientation(Orientation.S);
+        rover.setPosition(position);
+        rover.setOrientation(orientation);
         rover.setArea(new Area(5,5));
 
         Assertions.assertThrows(InvalidInstructionException.class, () -> {
-            rover.move(MovementDirection.A);
-        });
-    }
-
-    @Test
-    public void roverShouldNotMoveOutOfBoundsOnTheWest() {
-
-        Rover rover = new Rover();
-        rover.setPosition(new Position(0,0));
-        rover.setOrientation(Orientation.O);
-        rover.setArea(new Area(5,5));
-
-        Assertions.assertThrows(InvalidInstructionException.class, () -> {
-            rover.move(MovementDirection.A);
-        });
-    }
-
-    @Test
-    public void roverShouldNotMoveOutOfBoundsOnTheEast(){
-        Rover rover = new Rover();
-        rover.setPosition(new Position(4,0));
-        rover.setOrientation(Orientation.E);
-        rover.setArea(new Area(5,5));
-
-        Assertions.assertThrows(InvalidInstructionException.class, () -> {
-            rover.move(MovementDirection.A);
-        });
-    }
-
-    @Test
-    public void roverShouldNotMoveOutOfBoundsOnTheNorth() {
-        Rover rover = new Rover();
-        rover.setPosition(new Position(4,4));
-        rover.setOrientation(Orientation.N);
-        rover.setArea(new Area(5,5));
-
-        Assertions.assertThrows(InvalidInstructionException.class, () -> {
-            rover.move(MovementDirection.A);
+            rover.move(direction);
         });
     }
 
 
+    private static Stream<Arguments> illegalMovements()
+    {
+        return Stream.of(
+                Arguments.of(MovementDirection.A,Orientation.N, new Position(4,4)),
+                Arguments.of(MovementDirection.R,Orientation.S, new Position(4,4)),
+                Arguments.of(MovementDirection.A, Orientation.S, new Position(0,0)),
+                Arguments.of(MovementDirection.R, Orientation.N, new Position(0,0)),
+                Arguments.of(MovementDirection.A, Orientation.O, new Position(0,0)),
+                Arguments.of(MovementDirection.A, Orientation.E, new Position(4,4))
+        );
+    }
 
 }
