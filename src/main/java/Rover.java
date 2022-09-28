@@ -21,15 +21,11 @@ public class Rover{
     private Orientation orientation;
     private Position position;
     private Area area;
+    private State state;
 
 
     public void rotate(Rotation direction){
-
-        if(direction == Rotation.I){
-            orientation = directionLeftMap.get(orientation);
-        }else if(direction == Rotation.D){
-            orientation = directionRightMap.get(orientation);
-        }
+        this.state = this.state.rotate(direction);
     }
 
     public void move(MovementDirection direction) throws InvalidInstructionException {
@@ -44,30 +40,45 @@ public class Rover{
 
     private void moveBackward() throws InvalidInstructionException {
         if (this.orientation == Orientation.E) {
-            checkMovementAllowedTo(Orientation.O);
-            this.position.moveWest();
+            moveWest();
         } else if (this.orientation == Orientation.S) {
-            checkMovementAllowedTo(Orientation.N);
-            this.position.moveNorth();
+            moveNorth();
         } else if (this.orientation == Orientation.O) {
-            checkMovementAllowedTo(Orientation.E);
-            this.position.moveEast();
+            moveEast();
         } else {
-            checkMovementAllowedTo(Orientation.S);
-            this.position.moveSouth();
+            moveSouth();
         }
     }
 
+    public void moveSouth() throws InvalidInstructionException {
+        checkMovementAllowedTo(Orientation.S);
+        this.position.moveSouth();
+    }
+
+    public void moveEast() throws InvalidInstructionException {
+        checkMovementAllowedTo(Orientation.E);
+        this.position.moveEast();
+    }
+
+    public void moveNorth() throws InvalidInstructionException {
+        checkMovementAllowedTo(Orientation.N);
+        this.position.moveNorth();
+    }
+
+    public void moveWest() throws InvalidInstructionException {
+        checkMovementAllowedTo(Orientation.O);
+        this.position.moveWest();
+    }
+
     private void moveForward() throws InvalidInstructionException {
-        checkMovementAllowedTo(orientation);
         if (this.orientation == Orientation.E) {
-            this.position.moveEast();
+            this.moveEast();
         } else if(this.orientation == Orientation.O) {
-            this.position.moveWest();
+            this.moveWest();
         } else if(this.orientation == Orientation.S) {
-            this.position.moveSouth();
+            this.moveSouth();
         }  else {
-            this.position.moveNorth();
+            this.moveNorth();
         }
     }
 
@@ -84,6 +95,7 @@ public class Rover{
 
     public void setOrientation(Orientation orientation){
         this.orientation = orientation;
+        initializeState();
     }
 
     public void setPosition(Position position) {
@@ -107,15 +119,35 @@ public class Rover{
         position = new Position(Integer.parseInt(positionCoordinates[0]), Integer.parseInt(positionCoordinates[1]));
         orientation = Orientation.valueOf(positionCoordinates[2]);
 
+        initializeState();
+
         for (String direction: roverCommand[2].split("")){
-            if (direction.equals("A")){
+            if (direction.equals("A") || direction.equals("R")){
                 move(MovementDirection.valueOf(direction));
             }
-            else if (direction.equals("D")){
+            else if (direction.equals("D") || direction.equals("I")){
                 rotate(Rotation.valueOf(direction));
             }
         }
 
         return position.getX() + " " + position.getY() + " " + orientation;
+    }
+
+    private void initializeState() {
+        switch (orientation)
+        {
+            case N:
+                state = new NorthState(this);
+                break;
+            case S:
+                state = new SouthState(this);
+                break;
+            case E:
+                state = new EastState(this);
+                break;
+            case O:
+                state = new WestState(this);
+                break;
+        }
     }
 }

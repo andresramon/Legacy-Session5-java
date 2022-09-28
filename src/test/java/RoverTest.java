@@ -1,10 +1,10 @@
-import java.util.stream.Stream;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 public class RoverTest{
 
@@ -208,7 +208,9 @@ public class RoverTest{
     private  static  Stream<Arguments> roverCommandsToProcess(){
         return Stream.of(
                 Arguments.of("5 5\n0 1 N\nA\n", "0 2 N"),
-                Arguments.of("5 5\n0 1 N\nAD\n", "0 2 E")
+                Arguments.of("5 5\n0 1 N\nAD\n", "0 2 E"),
+                Arguments.of("5 5\n0 1 N\nAI\n", "0 2 O"),
+                Arguments.of("5 5\n0 1 N\nR\n", "0 0 N")
         );
     }
 
