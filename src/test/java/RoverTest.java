@@ -1,10 +1,10 @@
 import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 public class RoverTest{
 
@@ -168,20 +168,6 @@ public class RoverTest{
         checkRoverMovementForGivenOrientationAndDirection(initialPosition, finalPosition, orientation, movementDirection);
     }
 
-    private void checkRoverMovementForGivenOrientationAndDirection(Position initialPosition, Position finalPosition, Orientation orientation,
-            MovementDirection movementDirection) throws InvalidInstructionException {
-        Rover rover = new Rover();
-        rover.setOrientation(orientation);
-        rover.setPosition(initialPosition);
-        rover.setArea(new Area(5,5));
-
-        rover.move(movementDirection);
-
-
-        Assertions.assertEquals(finalPosition, rover.getPosition());
-        Assertions.assertEquals(orientation, rover.getOrientation());
-    }
-
     @ParameterizedTest
     @MethodSource("illegalMovements")
     public void roverShouldNotMoveOutOfBounds(MovementDirection direction,Orientation orientation, Position position) {
@@ -195,6 +181,15 @@ public class RoverTest{
         });
     }
 
+    @ParameterizedTest
+    @MethodSource("roverCommandsToProcess")
+    public void whenRoverReceiveACommandShouldProcessIt(String command, String expectedPosition) throws InvalidInstructionException{
+        Rover rover = new Rover();
+        String positionAndOrientation = rover.processCommand(command);
+
+        Assertions.assertEquals(expectedPosition, positionAndOrientation);
+    }
+
 
     private static Stream<Arguments> illegalMovements()
     {
@@ -204,8 +199,31 @@ public class RoverTest{
                 Arguments.of(MovementDirection.A, Orientation.S, new Position(0,0)),
                 Arguments.of(MovementDirection.R, Orientation.N, new Position(0,0)),
                 Arguments.of(MovementDirection.A, Orientation.O, new Position(0,0)),
-                Arguments.of(MovementDirection.A, Orientation.E, new Position(4,4))
+                Arguments.of(MovementDirection.A, Orientation.E, new Position(4,4)),
+                Arguments.of(MovementDirection.R, Orientation.E, new Position(0,0)),
+                Arguments.of(MovementDirection.R, Orientation.O, new Position(4,4))
         );
+    }
+
+    private  static  Stream<Arguments> roverCommandsToProcess(){
+        return Stream.of(
+                Arguments.of("5 5\n0 1 N\nA\n", "0 2 N"),
+                Arguments.of("5 5\n0 1 N\nAD\n", "0 2 E")
+        );
+    }
+
+    private void checkRoverMovementForGivenOrientationAndDirection(Position initialPosition, Position finalPosition, Orientation orientation,
+            MovementDirection movementDirection) throws InvalidInstructionException {
+        Rover rover = new Rover();
+        rover.setOrientation(orientation);
+        rover.setPosition(initialPosition);
+        rover.setArea(new Area(5,5));
+
+        rover.move(movementDirection);
+
+
+        Assertions.assertEquals(finalPosition, rover.getPosition());
+        Assertions.assertEquals(orientation, rover.getOrientation());
     }
 
 }

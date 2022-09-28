@@ -44,11 +44,13 @@ public class Rover{
 
     private void moveBackward() throws InvalidInstructionException {
         if (this.orientation == Orientation.E) {
+            checkMovementAllowedTo(Orientation.O);
             this.position.moveWest();
         } else if (this.orientation == Orientation.S) {
             checkMovementAllowedTo(Orientation.N);
             this.position.moveNorth();
         } else if (this.orientation == Orientation.O) {
+            checkMovementAllowedTo(Orientation.E);
             this.position.moveEast();
         } else {
             checkMovementAllowedTo(Orientation.S);
@@ -94,5 +96,26 @@ public class Rover{
 
     public void setArea(Area area) {
         this.area = area;
+    }
+
+    public String processCommand(String command) throws InvalidInstructionException{
+        String[] roverCommand  = command.split("\n");
+        String[] areaSizeCoordinates = roverCommand[0].split(" ");
+        String[] positionCoordinates = roverCommand[1].split(" ");
+
+        area = new Area(Integer.parseInt(areaSizeCoordinates[0]), Integer.parseInt(areaSizeCoordinates[1]));
+        position = new Position(Integer.parseInt(positionCoordinates[0]), Integer.parseInt(positionCoordinates[1]));
+        orientation = Orientation.valueOf(positionCoordinates[2]);
+
+        for (String direction: roverCommand[2].split("")){
+            if (direction.equals("A")){
+                move(MovementDirection.valueOf(direction));
+            }
+            else if (direction.equals("D")){
+                rotate(Rotation.valueOf(direction));
+            }
+        }
+
+        return position.getX() + " " + position.getY() + " " + orientation;
     }
 }
