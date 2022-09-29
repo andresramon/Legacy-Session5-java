@@ -1,5 +1,6 @@
 public class WestState implements State{
     private Rover rover;
+    private final Orientation orientation = Orientation.O;
 
     public WestState(Rover rover) {
         this.rover = rover;
@@ -23,5 +24,10 @@ public class WestState implements State{
         else {
             return new NorthState(rover);
         }
+    }
+
+    @Override
+    public Orientation getOrientation() {
+        return orientation;
     }
 }

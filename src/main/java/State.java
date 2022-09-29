@@ -3,4 +3,6 @@ public interface State {
     void moveBackward() throws InvalidInstructionException;
 
     State rotate(Rotation direction);
+
+    Orientation getOrientation();
 }

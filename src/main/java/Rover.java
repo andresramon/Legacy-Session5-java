@@ -1,53 +1,25 @@
 import java.util.EnumMap;
 import java.util.Map;
 
-public class Rover{
+public class Rover {
 
-    private static final Map<Orientation, Orientation> directionLeftMap = new EnumMap<>(Orientation.class);
-    private static final Map<Orientation, Orientation> directionRightMap = new EnumMap<>(Orientation.class);
-
-    static{
-        directionRightMap.put(Orientation.N, Orientation.E);
-        directionRightMap.put(Orientation.E, Orientation.S);
-        directionRightMap.put(Orientation.S, Orientation.O);
-        directionRightMap.put(Orientation.O, Orientation.N);
-
-        directionLeftMap.put(Orientation.N, Orientation.O);
-        directionLeftMap.put(Orientation.O, Orientation.S);
-        directionLeftMap.put(Orientation.S, Orientation.E);
-        directionLeftMap.put(Orientation.E, Orientation.N);
-    }
-
-    private Orientation orientation;
     private Position position;
     private Area area;
     private State state;
 
 
-    public void rotate(Rotation direction){
+    public void rotate(Rotation direction) {
         this.state = this.state.rotate(direction);
     }
 
     public void move(MovementDirection direction) throws InvalidInstructionException {
 
         if (direction == MovementDirection.R) {
-            moveBackward();
+            this.state.moveBackward();
         } else {
-            moveForward();
+            this.state.moveForward();
         }
 
-    }
-
-    private void moveBackward() throws InvalidInstructionException {
-        if (this.orientation == Orientation.E) {
-            moveWest();
-        } else if (this.orientation == Orientation.S) {
-            moveNorth();
-        } else if (this.orientation == Orientation.O) {
-            moveEast();
-        } else {
-            moveSouth();
-        }
     }
 
     public void moveSouth() throws InvalidInstructionException {
@@ -70,32 +42,14 @@ public class Rover{
         this.position.moveWest();
     }
 
-    private void moveForward() throws InvalidInstructionException {
-        if (this.orientation == Orientation.E) {
-            this.moveEast();
-        } else if(this.orientation == Orientation.O) {
-            this.moveWest();
-        } else if(this.orientation == Orientation.S) {
-            this.moveSouth();
-        }  else {
-            this.moveNorth();
-        }
-    }
-
     private void checkMovementAllowedTo(Orientation e) throws InvalidInstructionException {
         if (!this.area.isMovementAllowed(this.position, e)) {
             throw new InvalidInstructionException();
         }
     }
 
-    public Orientation getOrientation(){
-
-        return orientation;
-    }
-
-    public void setOrientation(Orientation orientation){
-        this.orientation = orientation;
-        initializeState();
+    public void setOrientation(Orientation orientation) {
+        initializeState(orientation);
     }
 
     public void setPosition(Position position) {
@@ -110,32 +64,29 @@ public class Rover{
         this.area = area;
     }
 
-    public String processCommand(String command) throws InvalidInstructionException{
-        String[] roverCommand  = command.split("\n");
+    public String processCommand(String command) throws InvalidInstructionException {
+        String[] roverCommand = command.split("\n");
         String[] areaSizeCoordinates = roverCommand[0].split(" ");
         String[] positionCoordinates = roverCommand[1].split(" ");
 
         area = new Area(Integer.parseInt(areaSizeCoordinates[0]), Integer.parseInt(areaSizeCoordinates[1]));
         position = new Position(Integer.parseInt(positionCoordinates[0]), Integer.parseInt(positionCoordinates[1]));
-        orientation = Orientation.valueOf(positionCoordinates[2]);
 
-        initializeState();
+        initializeState(Orientation.valueOf(positionCoordinates[2]));
 
-        for (String direction: roverCommand[2].split("")){
-            if (direction.equals("A") || direction.equals("R")){
+        for (String direction : roverCommand[2].split("")) {
+            if (direction.equals("A") || direction.equals("R")) {
                 move(MovementDirection.valueOf(direction));
-            }
-            else if (direction.equals("D") || direction.equals("I")){
+            } else if (direction.equals("D") || direction.equals("I")) {
                 rotate(Rotation.valueOf(direction));
             }
         }
 
-        return position.getX() + " " + position.getY() + " " + orientation;
+        return position.getX() + " " + position.getY() + " " + this.state.getOrientation();
     }
 
-    private void initializeState() {
-        switch (orientation)
-        {
+    private void initializeState(Orientation orientation) {
+        switch (orientation) {
             case N:
                 state = new NorthState(this);
                 break;
@@ -149,5 +100,9 @@ public class Rover{
                 state = new WestState(this);
                 break;
         }
+    }
+
+    public Orientation getOrientation() {
+        return state.getOrientation();
     }
 }
