@@ -66,20 +66,7 @@ public class Rover {
 
 
     private void initializeState(Orientation orientation) {
-        switch (orientation) {
-            case N:
-                state = new NorthState(this);
-                break;
-            case S:
-                state = new SouthState(this);
-                break;
-            case E:
-                state = new EastState(this);
-                break;
-            case O:
-                state = new WestState(this);
-                break;
-        }
+        state = StateFactory.initializeState(orientation, this);
     }
 
     public Orientation getOrientation() {
