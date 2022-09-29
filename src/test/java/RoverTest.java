@@ -185,7 +185,8 @@ public class RoverTest{
     @MethodSource("roverCommandsToProcess")
     public void whenRoverReceiveACommandShouldProcessIt(String command, String expectedPosition) throws InvalidInstructionException{
         Rover rover = new Rover();
-        String positionAndOrientation = rover.processCommand(command);
+        RoverController controller = new RoverController(rover);
+        String positionAndOrientation = controller.processCommand(command);
 
         Assertions.assertEquals(expectedPosition, positionAndOrientation);
     }

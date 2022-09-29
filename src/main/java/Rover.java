@@ -64,26 +64,6 @@ public class Rover {
         this.area = area;
     }
 
-    public String processCommand(String command) throws InvalidInstructionException {
-        String[] roverCommand = command.split("\n");
-        String[] areaSizeCoordinates = roverCommand[0].split(" ");
-        String[] positionCoordinates = roverCommand[1].split(" ");
-
-        area = new Area(Integer.parseInt(areaSizeCoordinates[0]), Integer.parseInt(areaSizeCoordinates[1]));
-        position = new Position(Integer.parseInt(positionCoordinates[0]), Integer.parseInt(positionCoordinates[1]));
-
-        initializeState(Orientation.valueOf(positionCoordinates[2]));
-
-        for (String direction : roverCommand[2].split("")) {
-            if (direction.equals("A") || direction.equals("R")) {
-                move(MovementDirection.valueOf(direction));
-            } else if (direction.equals("D") || direction.equals("I")) {
-                rotate(Rotation.valueOf(direction));
-            }
-        }
-
-        return position.getX() + " " + position.getY() + " " + this.state.getOrientation();
-    }
 
     private void initializeState(Orientation orientation) {
         switch (orientation) {
@@ -104,5 +84,10 @@ public class Rover {
 
     public Orientation getOrientation() {
         return state.getOrientation();
+    }
+
+    @Override
+    public String toString() {
+        return position.getX() + " " + position.getY() + " " + state.getOrientation();
     }
 }
