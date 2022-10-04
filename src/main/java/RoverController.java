@@ -1,9 +1,11 @@
 public class RoverController {
 
     private Rover rover;
+    private boolean isLimitless;
 
-    public RoverController(Rover rover) {
+    public RoverController(Rover rover, boolean isLimitless) {
         this.rover = rover;
+        this.isLimitless = isLimitless;
     }
 
     public String processCommand(String command) throws InvalidInstructionException {
@@ -11,7 +13,11 @@ public class RoverController {
         String[] areaSizeCoordinates = roverCommand[0].split(" ");
         String[] positionCoordinates = roverCommand[1].split(" ");
 
-        this.rover.setArea(new Area(getXSize(areaSizeCoordinates), getYSize(areaSizeCoordinates)));
+        Area area = new LimitedArea(getXSize(areaSizeCoordinates), getYSize(areaSizeCoordinates));
+        if (isLimitless) {
+            area = new LimitlessArea(area);
+        }
+        this.rover.setArea(area);
         this.rover.setPosition(new Position(getXCoordinate(positionCoordinates), getYCoordinate(positionCoordinates)));
         this.rover.setOrientation(Orientation.valueOf(positionCoordinates[2]));
 

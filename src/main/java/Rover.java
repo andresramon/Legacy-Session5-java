@@ -1,6 +1,3 @@
-import java.util.EnumMap;
-import java.util.Map;
-
 public class Rover {
 
     private Position position;

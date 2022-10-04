@@ -174,18 +174,39 @@ public class RoverTest{
         Rover rover = new Rover();
         rover.setPosition(position);
         rover.setOrientation(orientation);
-        rover.setArea(new Area(5,5));
+        rover.setArea(new LimitedArea(5,5));
 
         Assertions.assertThrows(InvalidInstructionException.class, () -> {
             rover.move(direction);
         });
     }
+    @Test
+    public void roverShouldNotMoveOutOfBounds() throws InvalidInstructionException {
+        Rover rover = new Rover();
+        RoverController  controller = new RoverController(rover, false);
+        String command = "5 5\n4 4 N\nA";
+
+        Assertions.assertThrows(InvalidInstructionException.class, () -> {
+            controller.processCommand(command);
+        });
+    }
+
+    @Test
+    public void roverShouldMoveOutOfBounds() throws InvalidInstructionException {
+        Rover rover = new Rover();
+        RoverController  controller = new RoverController(rover, true);
+        String command = "5 5\n4 4 N\nA";
+        String position = controller.processCommand(command);
+
+        Assertions.assertEquals( "4 5 N", position);
+    }
+
 
     @ParameterizedTest
     @MethodSource("roverCommandsToProcess")
     public void whenRoverReceiveACommandShouldProcessIt(String command, String expectedPosition) throws InvalidInstructionException{
         Rover rover = new Rover();
-        RoverController controller = new RoverController(rover);
+        RoverController controller = new RoverController(rover, false);
         String positionAndOrientation = controller.processCommand(command);
 
         Assertions.assertEquals(expectedPosition, positionAndOrientation);
@@ -220,7 +241,7 @@ public class RoverTest{
         Rover rover = new Rover();
         rover.setOrientation(orientation);
         rover.setPosition(initialPosition);
-        rover.setArea(new Area(5,5));
+        rover.setArea(new LimitedArea(5,5));
 
         rover.move(movementDirection);
 
