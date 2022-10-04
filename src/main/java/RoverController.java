@@ -16,11 +16,7 @@ public class RoverController {
         this.rover.setOrientation(Orientation.valueOf(positionCoordinates[2]));
 
         for (String direction : roverCommand[2].split("")) {
-            if (direction.equals("A") || direction.equals("R")) {
-                this.rover.move(MovementDirection.valueOf(direction));
-            } else if (direction.equals("D") || direction.equals("I")) {
-                this.rover.rotate(Rotation.valueOf(direction));
-            }
+            CommandFactory.initializeCommand(direction, this.rover).execute();
         }
 
         return rover.toString();
